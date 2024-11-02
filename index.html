@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        .form-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 5px;
+            margin: 5px 0;
+            width: 200px;
+        }
+        input[type="submit"] {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .nav-link {
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+            padding: 8px 15px;
+            color: white;
+            background-color: #008CBA;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+        .nav-link:hover {
+            background-color: #007399;
+        }
+        label {
+            display: inline-block;
+            width: 80px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shopping Cart System</h1>
+    
+    <div class="form-container">
+        <h2>Add to Cart</h2>
+        <form action="add-to-cart" method="post">
+            <div>
+                <label for="productId">Product ID:</label>
+                <input type="text" id="productId" name="productId" required>
+            </div>
+            <div>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+            </div>
+            <input type="submit" value="Add to Cart">
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Remove from Cart</h2>
+        <form action="remove-from-cart" method="post">
+            <div>
+                <label for="removeProductId">Product ID:</label>
+                <input type="text" id="removeProductId" name="productId" required>
+            </div>
+            <input type="submit" value="Remove from Cart">
+        </form>
+    </div>
+
+    <div>
+        <a href="view-cart" class="nav-link">View Cart</a>
+        <a href="login" class="nav-link">Login</a>
+    </div>
+
+    <script>
+        // Add simple form validation
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                const productId = this.querySelector('[name="productId"]').value;
+                if (productId.trim() === '') {
+                    e.preventDefault();
+                    alert('Please enter a valid Product ID');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
