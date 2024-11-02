@@ -1,0 +1,47 @@
+package com.example;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+
+@WebServlet("/remove-from-cart")
+public class RemoveFromCartServlet extends HttpServlet {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        String productId = request.getParameter("productId");
+        
+        Map<String, Integer> cart = (Map<String, Integer>) session.getAttribute("cart");
+        String message;
+        
+        if (cart != null && cart.containsKey(productId)) {
+            cart.remove(productId);
+            message = "Product removed successfully!";
+        } else {
+            message = "Product not found in cart!";
+        }
+        
+        try (PrintWriter out = response.getWriter()) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Remove from Cart</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h2>" + message + "</h2>");
+            out.println("<br/>");
+            out.println("<a href='index.html'>Back to Home</a>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+}
